@@ -5,7 +5,9 @@
         <div class="card card-register mx-auto mt-5">
             <div class="card-header">已建食譜</div>
             <div class="card-body">
-                <a href="{% url 'recipe:create' %}" class="btn btn-primary mb-3"><i class="fa fa-plus-circle" aria-hidden="true"></i> 新增食譜</a>
+                <a href="{% url 'recipe:create' %}" class="btn btn-primary ml-3"><i class="fa fa-plus-circle" aria-hidden="true"></i> 新增食譜</a>
+                <a href="{% url 'recipe:index' %}" class="btn btn-primary ml-3">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>返回食譜</a>
                 <table class="table">
                     <thead>
                         <tr class="row">
@@ -37,8 +39,7 @@
                     </tbody>
                 </table>
 
-                <a href="{% url 'recipe:index' %}" class="btn btn-primary mb-3">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>返回食譜</a>
+                
             </div>
         </div>
     </div>

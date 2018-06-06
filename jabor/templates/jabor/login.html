@@ -2,6 +2,8 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+
 {% load static %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 <link rel='stylesheet' href="{% static 'styles/style2.css' %}">
@@ -17,7 +19,7 @@
             <div class="wrapper ">
                 <form class="login" method="POST" id='form2'>
                     {% csrf_token %}
-                    <p class="title"  style="text-align: center">Company Log in</p>
+                    <p class="title animated infinite headShake"  style="text-align: center">Company Log in</p>
                     
                     <input type="email" placeholder="Enter email" autofocus class="form-control" id="Company_email" name="Company_email" />
                     <i class="fa fa-user"></i>

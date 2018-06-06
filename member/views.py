@@ -4,6 +4,8 @@ from django.http import HttpResponse
 import datetime
 import json
 
+import smtplib  #send email
+
 from member import models
 
 # Create your views here.
@@ -14,16 +16,19 @@ def index(request):
     # return render(request,'member/index.html',locals())
 
     if request.method == 'POST':
-        useremail = request.POST['useremail']
-        password = request.POST['password']
-        member = Member.objects.filter(useremail=useremail)
-        memberid=member[0].id
+        try:
+            useremail = request.POST['useremail']
+            password = request.POST['password']
+            member = Member.objects.filter(useremail=useremail,password=password)
+            memberid=member[0].id
 
-        return redirect("/member/update/%s" %(memberid))
+        except:
+            response = HttpResponse("<script>alert('輸入錯誤');location.href='/member/' </script>")
+            return response
+        else:
+            return redirect("/member/update/%s" %(memberid))
 
-   
     return render(request,'member/index.html',locals()) 
-
 
 
 
@@ -80,22 +85,26 @@ def create(request):
 
 def update(request,id):
     if request.method == 'POST':        
-        username = request.POST["username"]      
+        username = request.POST["username"]  
+        password = request.POST["password"]    
         useremail = request.POST["useremail"]
-        userbirth = request.POST["userbirth"]
+        userbirth = request.POST["userbirth"] 
+        useraddress = request.POST["useraddress"]
 
         # 修改資料庫中的會員資料
         member = Member.objects.get(id=int(id))
         member.username = username
+        member.password = password
         member.usermail = useremail
         member.userbirth = userbirth
+        member.useraddress = useraddress
+        
         member.save()
 
         # return redirect('/member/login')
         response = HttpResponse("<script>alert('修改完成');location.href='/'</script>")
         return response
 
-    # title = "會員修改"
     # 根據會員編號取得會員資料傳給update.html
     member = Member.objects.get(id=int(id))
     return render(request,'member/update.html',locals())
@@ -144,11 +153,29 @@ def logout(request):
 
 def forgetpwd(request):
     if request.method == 'POST':
-        email = request.POST['useremail']
-        member = Member.objects.filter(useremail=email)
-        memberid=member[0].id
+        try:
+            useremail = request.POST['useremail']
+            members = Member.objects.all()
+            member = Member.objects.filter(useremail = useremail).values('useremail')
+            member2 = Member.objects.filter(useremail = useremail).values('password')
+            memberemail = member[0]['useremail']
+            memberpwd = member2[0]['password']
+            # memberid=member[0].id
+            # return redirect("/member/resetpwd/%s" %(memberid))
+        except:
+            response = HttpResponse("<script>alert('無此信箱');location.href='/member/forgetpwd' </script>")
+            return response
+        else:
 
-        return redirect("/member/resetpwd/%s" %(memberid))
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login("syoku03company@gmail.com", "ssyyookkuu03")
+
+            msg = memberpwd
+            server.sendmail("syoku03company@gmail.com", memberemail,msg)
+            server.quit()
+            return redirect("/member/login")
+        
 
     return render(request,'member/forgetpwd.html',locals()) 
 

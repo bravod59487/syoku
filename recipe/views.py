@@ -9,8 +9,6 @@ import random
 import string
 from django.db.models import Q
 
-# Create your views here.
-
 def index(request):
     #取出recipe資料庫所有資料
     recipes=Recipe.objects.all()
@@ -27,10 +25,6 @@ def search(request):
             recipes=Recipe.objects.all()
             return render(request,'recipe/index.html',locals())
         else:
-            
-            # if(recipes == ""):
-            #     response = HttpResponse("<script>alert('查無資料');location.href='/recipe/index'</script>")
-            #     return response
             return render(request,'recipe/search.html',locals())
 
 def userrecipe(request):
@@ -62,7 +56,7 @@ def create(request):
     if 'uid' in request.COOKIES:
         user = request.COOKIES['uid']
     
-        cooktimelist = [10,20,30,45,60,90]
+        cooktimelist = [10,20,30,45,60,90,120]
         portionlist = [1,2,3,4,5,6,7,8,9,10]
         
         if request.method == 'POST' and request.FILES['recCover']:
@@ -100,12 +94,12 @@ def update(request,id):
     if 'uid' in request.COOKIES:
         
         user = request.COOKIES['uid']
-        # recipes=Recipe.objects.filter(userid=user)
+       
         
-        cooktimelist = [10,20,30,45,60,90]
+        cooktimelist = [10,20,30,45,60,90,120]
         portionlist = [1,2,3,4,5,6,7,8,9,10]
         veganlist = ["葷食","蛋奶素","素食"]
-        #todo 根據會員編號取得會員資料傳給update.html
+        
         recipe=Recipe.objects.get(recid=int(id))
         fodlist = json.loads(recipe.recfood)
         stplist = json.loads(recipe.recstep)
@@ -166,7 +160,7 @@ def delete(request,id):
 
         recipe=Recipe.objects.get(recid=int(id))
         recipe.delete()
-        #todo 刪除完成後轉到http://localhost:8000/member
+        
         return redirect('/recipe/userrecipe')
     
     else:

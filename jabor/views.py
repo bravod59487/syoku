@@ -46,10 +46,10 @@ def update(request):
         Company_email = request.COOKIES['Company_email']
         companysA = Company_data.objects.filter(Company_email=Company_email).values(
             'id', 'Company_name', 'Company_email', 'Company_photo', 'Company_tele', 'Company_address', 'Company_open_time', 'Company_close_time')  # 取得cookie的資料庫id為多少3 ,
-        # print(companysA)
+        print(companysA)
 
         companysB = companysA[0]
-        # print(companysB)
+        print(companysB)
         return render(request, 'jabor/update.html', locals())
     else:
         return HttpResponse("<script>alert('請先登入');location.href='/jabor/login'</script>")
@@ -147,24 +147,28 @@ def logout(request):
 def forget_p(request):
 
     if request.method == 'POST':
-        Company_email = request.POST["Company_email"]
-        companys = Company_data.objects.all()
-        companysA = Company_data.objects.filter(Company_email=Company_email).values(
-            'Company_email')  # 取得cookie的資料庫id為多少3 ,
+        try:
+            Company_email = request.POST["Company_email"]
+            companys = Company_data.objects.all()
+            companysA = Company_data.objects.filter(Company_email=Company_email).values('Company_email')  # 取得cookie的資料庫id為多少3 ,
         # print(companysA)
-        companysB = Company_data.objects.filter(
-            Company_email=Company_email).values('Company_password')
-        company_e = companysA[0]['Company_email']
-        company_p = companysB[0]['Company_password']
-        # print(company_p)
+            companysB = Company_data.objects.filter(Company_email=Company_email).values('Company_password')            
+            company_e = companysA[0]['Company_email']
+            company_p = companysB[0]['Company_password']
+        except:
+            response = HttpResponse("<script>alert('無此信箱');location.href='/jabor/forget_p' </script>")
+            return response
+        else:
 
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login("syoku03company@gmail.com", "ssyyookkuu03")
+            # print(company_p)
 
-        msg = company_p
-        server.sendmail("syoku03company@gmail.com", company_e, msg)
-        server.quit()
-        return redirect('/jabor/login')
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login("syoku03company@gmail.com", "ssyyookkuu03")
+
+            msg = "your password is "+company_p
+            server.sendmail("syoku03company@gmail.com", company_e, msg)
+            server.quit()
+            return redirect('/jabor/login')
 
     return render(request, 'jabor/forget_p.html', locals())

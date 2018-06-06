@@ -1,0 +1,35 @@
+{% extends 'base_c.html' %} {% block content %} {% load static %}
+
+ <div class="container" style="font-family: 'SimSun'">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">
+        
+      </div>
+      <div class="card-body">
+
+</div>
+</div>
+
+
+
+  <script>
+        $(document).ready(function () {
+            // $("#imgall").click(function () {
+            //     // alert('123')
+            //     img = $(this).attr('src')
+            //     alert (img)
+            //     // $("#imgalll").attr('src',img)
+            // });
+            $('#tobddy').on('click', '#imgall', function () {
+                img = $(this).attr('src')
+                // alert(img)
+                $("#imgalll").attr('src',img)
+
+            })
+        })
+</script>
+
+</div>
+
+
+{% endblock %}

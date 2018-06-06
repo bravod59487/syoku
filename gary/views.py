@@ -99,12 +99,16 @@ def login(request):
 
 def history(request):
     
-    history = Plan.objects.all()
+    usercook = request.COOKIES['uid']
+
+    history = Plan.objects.filter(useremail=usercook)
+
 
     return render(request, 'gary/history.html',locals())
 
 
 def historydata(request,id):
+    
     
     history = Plan.objects.filter(id=int(id))
     

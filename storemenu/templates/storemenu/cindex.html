@@ -1,11 +1,16 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container" style="font-family: 'SimSun'">
+<div class="container" style="font-family: '微軟正黑體'">
 <div class="card card-register mx-auto mt-5">
   <div class="card-header">
-
-  <h2 class="float-left" style="font-weight: 900">{{ Company.Company_name }}</h2>
-  <h3 class="float-right">地址: {{ Company.Company_address }}</h3>
-  <h3 class="float-right mr-5">電話: {{ Company.Company_tele   }}</h3>
+    <div>
+  <h2 style="font-weight: 900;font-family: '微軟正黑體'">{{ Company.Company_name }}</h2>
+  </div>
+  <div>
+  <h3 style="font-family: '微軟正黑體'">地址: {{ Company.Company_address }}</h3>
+  </div>
+  <div>
+  <h3 style="font-family: '微軟正黑體'">電話: {{ Company.Company_tele   }}</h3>
+  </div>
   </div>
   <div class="row m-3" id="tooo">
     {% for storemenu in storemenu %}
@@ -13,7 +18,7 @@
       <div class="card " style="border: 3px solid black;">
         <img class="card-img-top" id="imgall" src="/media/{{storemenu.cimg}}" alt="Card image cap" data-toggle="modal" data-target="#exampleModal">
         <div class="card-body">
-          <h4 class="card-title" style="font-weight: 900">{{storemenu.cname}}</h4>
+          <h4 class="card-title" style="font-weight: 900;font-family: '微軟正黑體'">{{storemenu.cname}}</h4>
           <p class="card-text">{{storemenu.cintroduction}}</p>
         </div>
         <ul class="list-group list-group-flush">

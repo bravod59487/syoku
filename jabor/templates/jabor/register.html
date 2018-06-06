@@ -1,10 +1,11 @@
 {% extends 'base.html' %} {% block content %} {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
 
 <div class="container">
     <div class="card card-register mx-auto mt-5" style="margin :auto">
         <div class="card-header" style="margin: auto;padding-top: 40px">
-            <h2>Register For Your Company</h2>
+            <h2 class="animated infinite bounce">Register For Your Company</h2>
         </div>
         <hr style="border: solid 1px black">
         <div class="card-body" style="margin: 0 auto">
@@ -13,50 +14,56 @@
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY NaMe"><b><i class="fa fa-address-book" style="color:blue"></i>&nbsp;&nbsp;公司名稱: </b></label>
-                        <input type="Name" class="form-control" name="Company_name" id="Company_name" placeholder="Enter your name" style="border:solid 1px black">
+
+                       
+
+                        <input type="Name" class="form-control" name="Company_name" id="Company_name" placeholder="Enter your name" style="border:solid 1px black" required>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY PaSsWoRd"><b><i class="fa fa-eye-slash" style="color:orange"></i>&nbsp;&nbsp;密碼輸入: </b></label>
-                        <input type="password" class="form-control " name="Company_password" id="Company_password" placeholder="Password" style="border:solid 1px black">
+
+                        <input type="password" class="form-control " name="Company_password" id="Company_password" placeholder="Password" style="border:solid 1px black" required>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY EmAiL"><b><i class="fa fa-envelope-o" style="color:red"></i>&nbsp;&nbsp;您的信箱: </b></label>
-                        <input type="email" class="form-control" name="Company_email" id="Company_email" placeholder="Enter email" style="border:solid 1px black">
+                        <input type="email" class="form-control" name="Company_email" required  id="Company_email" placeholder="Enter email" style="border:solid 1px black">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY TeLePhOnE"><b><i class="fa fa-mobile-phone" style="font-size:24px; style:gray"></i>&nbsp;&nbsp;電話號碼: </b></label>
-                        <input type="text" class="form-control" name="Company_tele" id="Company_tele" placeholder="Enter Phone" style="border:solid 1px black">
+                        <input type="text" class="form-control" name="Company_tele"  required id="Company_tele" placeholder="Enter Phone" style="border:solid 1px black">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY AdDrEsS"><b><i class="fa fa-car" style="color:purple"></i>&nbsp;&nbsp;店家地址: </b></label>
-                        <input type="text" class="form-control" name="Company_address" id="Company_address" placeholder="Enter Address" style="border:solid 1px black">
+                        <input type="text" class="form-control" name="Company_address"  required id="Company_address" placeholder="Enter Address" style="border:solid 1px black">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY PhOtO"><b><i class="fa fa-file-photo-o" style="color:aqua"></i>&nbsp;&nbsp;公司照片:　</b></label>
                         <img id="output" height="200" style="display:none">
-                        <input type="file" class="form-control" name="Company_photo" id="Company_photo" style="border:solid 1px black" onchange="openFile(event)" required>
+                        <input type="file" class="form-control" name="Company_photo" required id="Company_photo" style="border:solid 1px black" onchange="openFile(event)" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY OpEn TiMe"><b><i class="fa fa-calendar-check-o" style="color:green"></i>&nbsp;&nbsp;開門時間：　</b></label>
-                        <input type="time" name="Company_open_time" id='Company_open_time' style="border:solid 1px black;zoom: 1.5">
+                        <input type="time" name="Company_open_time" id='Company_open_time' required style="border:solid 1px black;zoom: 1.5">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8" style="margin: auto">
                         <label for="CoMpAnY ClOsE TiMe"><b><i class="fa fa-calendar-times-o" style="color:brown"></i>&nbsp;&nbsp;關店時間: </b></label>
-                        <input type="time" name="Company_close_time" id='Company_close_time' style="border:solid 1px black;zoom: 1.5">
+                        <input type="time" name="Company_close_time" id='Company_close_time' required style="border:solid 1px black;zoom: 1.5">
                     </div>
                 </div>
                 <br>
