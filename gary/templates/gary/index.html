@@ -253,7 +253,9 @@
                 <div class="card col-md-6" style="border: 3px solid black;">
                     <div class="draggable">
                             <a href="{% url 'storemenu:cindex' storemenu.Company_email %}"><img class="card-img-top"  id="imgall" src="/media/{{storemenu.cimg}}" alt="Card image cap" data-toggle="modal" data-target="#exampleModal"></a>
-                        <div style="display: none">
+
+
+                         <div style="display: none"> <!--這一句話 把底下的都藏起來了 -->
                             <div class="card-body">
                                 <h4 class="card-title" style="font-weight: 900">[店家]{{storemenu.cname}}</h4>
                             </div>
@@ -263,6 +265,9 @@
                                 <li class="list-group-item">價錢: {{storemenu.cprice}}</li>
                             </ul>
                         </div>
+
+
+
                     </div>
                     <div class="card-body">
                         <h4 class="card-title" style="font-weight: 900">[店家]{{storemenu.cname}}</h4>
@@ -279,6 +284,7 @@
         </div>
     </div>
 
+    <!-- 彈跳出一個圖片images/1.gif'  如果 再點一下 會進入function random_plan() -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" onclick="random_plan()">
         <div class="modal-dialog modal-dialog-centered" role="document" >
                 <img src="{% static 'images/1.gif' %}"  alt="" >
@@ -290,6 +296,7 @@
             </div>
         </div>
     </div>
+    <!-- cursor:pointer 是把 滑鼠游標變成超連結的樣式 -->
     <h1 id="table" style="color:white; font-size: 80px; position: fixed;right: 50px;bottom: 50px; cursor:pointer;" ><i class="fas fa-plus-circle"></i></h1>
     <!-- <h1 style="color:white; font-size: 80px; position: fixed;right: 50px;bottom: 50px; cursor:pointer display: none;" ><i class="fas fa-minus-circle"></i></i></h1> -->
     
@@ -301,36 +308,50 @@
 <script src="{% static 'jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
 <script>
     // var a = 100;
+    // .draggable為底下每一個圖片 .draggable 設定成可以拖曳的
     $(".draggable").draggable({
 
         // $(this).css('cursor','move');
         // brings the item back to its place when dragging is over
+        // 當拖動結束時將項目帶回原位
         revert:true, 
         
         // let the dragged item always on the top
-        // stack: ".draggable"
-
+        // stack: ".draggable",
+        
+        // z-index越大 代表在越上層
+        // 開始的z-index比結束z-index還要大 所以每次拖曳都會在上面那一層
         start: function(event, ui) { $(this).css("z-index", a=105); },
         stop : function(event, ui) { $(this).css("z-index", a=95); },
         
         
-    });   
-    
+    });  
+
+
+    // .dropzone 每個空的格子.droppable 就可被當成一個可以放置的位置
     $(".dropzone").droppable({
+        // 不知道even 跟UI 的意思是 (猜測UI就是被拖曳的目標)
         drop: function(event, ui) {
             
+            // this這裡指的是被放置的格子
             var basket = $(this);
+            // 把UI變成可以拖曳的(猜的)
+            //move為被拖曳的物件
             var move = ui.draggable;
+            
             
             addBasket(basket,move)
             cal_count();
         }   
     });
 
+
+    // #自動收起來 上面的表單
     $('#table').click(function(){
         $("#fix1").toggle( "fold", 2000 );
     });
 
+    // 把拖曳的物件放置在上面 改上面的參數讓上面可以顯示出來
     function addBasket(basket, move) {
         //餐點名字 move.find(".card-title").html()
         //餐點照片 move.find("img").attr("src")
@@ -345,18 +366,20 @@
         basket.find('h5').text(cal_text)
 
     }  
-
+    // fixedDiv這個在下面('#fix1').fixedDiv 指的是 fix1 為上面整個table  fixedDiv是指這個function
     $.fn.fixedDiv = function(actCls, i){
         var that = $(this);
         var h = that.height();
-        var topVal = (h + 2) * i;
-        // console.log($(this).offset())
-        var offsetTop = $(this).offset().top;
-        
+        console.log(h) //450 那個物件的高度
+        var topVal = (h + 2) * i; //這個算法是 如果第一個 就是0 最頂端 第二個就是在第一個的位子下面
+        console.log($(this).offset()) //{top: 360, left: 50}
+        var offsetTop = $(this).offset().top
+
         function fix(){
-            scrollTop = $(document).scrollTop();   
-            // console.log("offsetTop: " + offsetTop);
-            // console.log("scroll: " + screenTop);
+            scrollTop = $(document).scrollTop();   //為滾動的畫面最頂端位置
+            console.log("offsetTop: " + offsetTop);
+            console.log("scroll: " + screenTop);
+            console.log(scrollTop) //為滾動的畫面最頂端位置
             if (scrollTop > (offsetTop - topVal)) {
                 that.addClass(actCls);
                 that.css("top", topVal + "px");                
@@ -367,6 +390,9 @@
         fix();
         $(window).scroll(fix);
     }
+
+    // $('#mainNav').fixedDiv('fix-div', 0);
+    // $('#fix1').fixedDiv('fix-div', 1);
     $('#fix1').fixedDiv('fix-div', 0);
     // $('#fix2').fixedDiv('fix-div', 1);
     // $('#fix3').fixedDiv('fix-div', 2);
@@ -381,6 +407,8 @@
         
     // });
 
+
+    // 自動變化菜單的function
     function random_plan(){
         // $('#exampleModalCenter').removeClass('show');
         // $('#exampleModalCenter').css('display','none');
@@ -389,10 +417,20 @@
 
         var items = $('.draggable')
         var len = items.length
+        // alert(len) 58個
+
+
         // eq(index)
         // alert(num)
         
+        // jquery的each就是裡面都執行一次
         $('td.dropzone').each(function(){
+            // Math.floor() 函式會回傳無條進捨去後的最大整數。
+            // Math.random*10 就是 0~9之間的數字
+            // (Math.random*10)+1 就是 1~10之間的數字
+            // 底下是 亂數是(0~長度)+1 可以為小樹 所以要無條件捨去再去最大整數 -1
+            // 0~58 →1~59 捨去-1 →0~58
+
             var num = Math.floor((Math.random() * len) + 1) -1;
 
             //找出標題 圖片 卡洛里
